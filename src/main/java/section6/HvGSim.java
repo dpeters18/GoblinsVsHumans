@@ -20,20 +20,7 @@ public class HvGSim {
         }
     }
     public void step(){
-        /*
-           In one step:
-           -Humans and goblins may move one space if they are not in fight mode
-           -Goblins move one cell north or south depending on where the humans not fighting are
-           -If a goblin and human collide, combat is initiated
-           -A chest drops randomly in a spot (location/item changes with each round of combat)
-           -One round of combat is executed, in which:
-                If a fighter dies, the death is reflected in the respective array
-                If a goblin dies, an item drops, and the human collects it
-                Goblin either "attacks" or the attack misses ()
-                If the human's health is less than 50%, the human may randomly use a potion, if it is in inventory
-                Otherwise, the human should just stick to using attacking items at random or punching if there aren't any
-         */
-        //just have goblins move south for now. Deal with actual human-seeking movement later.
+          //human movement (randomized)
         for(Human human: grid.getHumans())
         {
             if (grid.fightersAt(human.getLoc()).stream()
@@ -141,68 +128,65 @@ public class HvGSim {
                         }
                     }
         //for every human's turn:
-        for(Human human:grid.getHumans())
-        {
-            if(human.inFightmode())
-            {   int x;
-                Goblin opponent=(Goblin)((grid.fightersAt(human.getLoc()).stream()
-                        .filter(c->c.getClass().equals(Goblin.class))
+        for(Human human:grid.getHumans()){
+            if(human.inFightmode()){
+                int x;
+                Goblin opponent = (Goblin) ((grid.fightersAt(human.getLoc()).stream()
+                        .filter(c -> c.getClass().equals(Goblin.class))
                         .collect(Collectors.toList()).get(0)));
                 //System.out.println(opponent);
-                if(human.getInventory().isEmpty())
-                {
-                    x=rando.nextInt(100);
-                    if(x<95){System.out.println(human.getHealth());
+                if (human.getInventory().isEmpty()){
+                    x = rando.nextInt(100);
+                    if (x < 95) {
+                        System.out.println(human.getHealth());
                         human.punch(opponent);
-                        System.out.println("Human at "+human.getLoc()+" punched the goblin at the same " +
+                        System.out.println("Human at " + human.getLoc() + " punched the goblin at the same " +
                                 "location. Goblin took 2 damage.");
-                        System.out.println("g: "+opponent.getHealth()+"\n");
+                        System.out.println("g: " + opponent.getHealth() + "\n");
                     }
                 }
                 else {
                     x = rando.nextInt(human.getInventory().size());
-                    for(int i=0;i<human.getInventory().size();i++){
-                        if(i==x)
-                        {
+                    for (int i = 0; i < human.getInventory().size(); i++) {
+                        if (i == x) {
 
                             System.out.println(human.getHealth());
-                            if(human.getInventory().get(i) instanceof Potion
-                            &&human.getHealth()<=5)
-                            { System.out.println(human.getHealth());
-                                human.getInventory().get(i).effect(human,0);
-                                System.out.println("Human at coordinates "+human.getLoc()+" used a potion.");
-                                        human.removeItem(i);
-                            }
-                            else if(human.getInventory().get(i) instanceof Axe||
-                                    human.getInventory().get(i) instanceof Sword){
-                                human.getInventory().get(i).effect(human,opponent);
-                                if(human.getInventory().get(i) instanceof Axe) {
+                            if (human.getInventory().get(i) instanceof Potion
+                                    && human.getHealth() <= 5) {
+                                System.out.println(human.getHealth());
+                                human.getInventory().get(i).effect(human, 0);
+                                System.out.println("Human at coordinates " + human.getLoc() + " used a potion.");
+                                human.removeItem(i);
+                            } else if (human.getInventory().get(i) instanceof Axe ||
+                                    human.getInventory().get(i) instanceof Sword) {
+                                human.getInventory().get(i).effect(human, opponent);
+                                if (human.getInventory().get(i) instanceof Axe) {
                                     System.out.println("Human at " + human.getLoc() + " used an axe. " +
                                             "Goblin at the same place took " +
-                                            ((int) (((double) (7 * human.getHealth())) / 10.0)) + " damage.");
-                                }
-                                else {
+                                            ((7 * human.getHealth()) / 10) + " damage.");
+                                } else {
 
                                     System.out.println("Human at " + human.getLoc() + " used a sword. " +
                                             "Goblin at the same place took " +
-                                            ((int) (((double) (6 * human.getHealth())) / 10.0)) + " damage.");
+                                            ((6 * human.getHealth()) / 10) + " damage.");
                                 }
-                            }
-                            else{
-                                int y=rando.nextInt(100);
-                                if(y<95){
+                            } else {
+                                int y = rando.nextInt(100);
+                                if (y < 95) {
                                     human.punch(opponent);
-                                    System.out.println("Human at "+human.getLoc()+" punched the goblin at the same " +
+                                    System.out.println("Human at " + human.getLoc() + " punched the goblin at the same " +
                                             "location. Goblin took 2 damage.");
                                 }
                             }
-                            System.out.println("g: "+opponent.getHealth()+"\n");
+                            System.out.println("g: " + opponent.getHealth() + "\n");
                             break;
                         }
+                    }
                 }
                     //now to remove the goblin from the field if it's dead and collect any dropped items:
-
-                    if (opponent.getHealth()<=0){
+                        int y=opponent.getHealth();
+                    System.out.println("Health: "+y);
+                    if (y<=0){
                         System.out.println("Goblin at "+opponent.getLoc()+ " was killed by a " +
                                 "human at the same location.");
                         grid.remover(opponent);
@@ -223,7 +207,7 @@ public class HvGSim {
                                 break;
                         }
                     }
-                }
+
             }
         }
 
@@ -303,5 +287,8 @@ public class HvGSim {
                 loc.setRow(loc.getRow() + 1);
         }
         return loc;
+    }
+    public void killOff(Goblin goblin, Human human){
+
     }
 }

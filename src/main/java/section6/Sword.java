@@ -5,7 +5,7 @@ public class Sword implements ItemDrop{
     public void effect(Object obj,Object objj) {
         Human homme = (Human) obj;
         Goblin goblin = (Goblin) objj;
-        int damage=(int)(((double)(damageFactor* homme.getHealth()))/10.0);
+        int damage=(damageFactor*homme.getHealth())/10;
         goblin.setHealth(goblin.getHealth()-damage);
     }
 }
