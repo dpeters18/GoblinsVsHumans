@@ -288,7 +288,5 @@ public class HvGSim {
         }
         return loc;
     }
-    public void killOff(Goblin goblin, Human human){
 
-    }
 }
