@@ -61,7 +61,7 @@ public class HvGPanel extends JPanel{
                sim.step();
            }
            try {
-               Thread.sleep(5);
+               Thread.sleep(100);
            }
            catch(Exception ignore){
 
