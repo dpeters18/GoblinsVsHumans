@@ -12,9 +12,9 @@ public class HvGWindow {
         String[] options1 = {"Humans", "Goblins"};
         String[] options2 = {"Yes", "No"};
         int outcome;
-        do {outcome = JOptionPane.showOptionDialog(null, panel1, "5 humans and 5 goblins will fight to the death" +
-                                "who do you think will win?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
-                        null, options1, null);
+        do {outcome = JOptionPane.showOptionDialog(null,  "5 humans and 5 goblins will fight to the death. " +
+                                "Who do you think will win?","Humans vs Goblins", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE,
+                        null, options1, options1[0]);
                 HvGPanel panel=new HvGPanel();
                 JFrame screen = new JFrame();
                 screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

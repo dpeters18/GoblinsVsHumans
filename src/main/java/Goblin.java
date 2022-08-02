@@ -9,6 +9,7 @@ public class Goblin extends Fighter{
     int strength;
     Location loc;
     int health;
+    boolean locModified=false;
     boolean fightmode;
     public Goblin(int strength,int health,Location loc){
         direction=1;
@@ -106,8 +107,20 @@ public class Goblin extends Fighter{
     public void setHealth(int health) {this.health=health;}
     public void attack(Human homme)
     {
-       homme.setHealth(homme.getHealth()-(int)(((double) strength*health)/20.0));
+       if((((double) strength*health)/20.0)<=0)
+           homme.setHealth(homme.getHealth()-1);
+       else {
+           homme.setHealth(homme.getHealth() - (int) (((double) strength * health) / 20.0));
+       }
     }
+    public void setLocModified(boolean bool){
+        this.locModified=bool;
+    }
+
+    public boolean isLocModified() {
+        return locModified;
+    }
+
     @Override
     public String toString() {
         return "g";

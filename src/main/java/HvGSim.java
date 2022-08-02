@@ -131,6 +131,7 @@ public class HvGSim {
         }
         //now for every goblin's turn:
         for (Goblin goblin: grid.getMob()){
+            goblin.setLocModified(false);
             if(goblin.inFightmode()) {
                 goblin.fightInitiated(false);
                 int x = rando.nextInt(100);
@@ -216,6 +217,7 @@ public class HvGSim {
                                     }
                                 if (!goblin.inFightmode()) {
                                     goblin.setLoc(south(goblin.getLoc(), goblin));
+                                    goblin.setLocModified(true);
                                     if (grid.fightersAt(goblin.getLoc()).stream()
                                             .anyMatch(c -> c.getClass().equals(Human.class) && !c.inFightmode())) {
                                         for (Fighter fighter : grid.fightersAt(goblin.getLoc())) {
@@ -235,6 +237,7 @@ public class HvGSim {
                                     }
                                 if (!goblin.inFightmode()) {
                                     goblin.setLoc(north(goblin.getLoc(), goblin));
+                                    goblin.setLocModified(true);
                                     if (grid.fightersAt(goblin.getLoc()).stream()
                                             .anyMatch(c -> c.getClass().equals(Human.class) && !c.inFightmode())) {
                                         for (Fighter fighter : grid.fightersAt(goblin.getLoc())) {
@@ -254,6 +257,7 @@ public class HvGSim {
                                     }
                                 if (!goblin.inFightmode()) {
                                     goblin.setLoc(west(goblin.getLoc(), goblin));
+                                    goblin.setLocModified(true);
                                     if (grid.fightersAt(goblin.getLoc()).stream()
                                             .anyMatch(c -> c.getClass().equals(Human.class) && !c.inFightmode())) {
                                         for (Fighter fighter : grid.fightersAt(goblin.getLoc())) {
@@ -273,6 +277,7 @@ public class HvGSim {
                                     }
                                 if (!goblin.inFightmode()) {
                                     goblin.setLoc(east(goblin.getLoc(), goblin));
+                                    goblin.setLocModified(true);
                                     if (grid.fightersAt(goblin.getLoc()).stream()
                                             .anyMatch(c -> c.getClass().equals(Human.class) && !c.inFightmode())) {
                                         for (Fighter fighter : grid.fightersAt(goblin.getLoc())) {
@@ -285,7 +290,10 @@ public class HvGSim {
                             }
                         }
                         if(grid.getHumans().stream().allMatch(Human::inFightmode)){
-                            grid.getMob().forEach(g->g.setDirection(4));
+                            for(Goblin gob:grid.getMob()){
+                                if(!gob.isLocModified()&&!gob.inFightmode())
+                                    gob.setDirection(4);
+                            }
                         }
                     }
         //then update the grid
