@@ -37,16 +37,14 @@ public class HvGPanel extends JPanel{
         super.paintComponent(graphics);
         Graphics2D g= (Graphics2D) graphics;
 
-        //use iterators to avoid exceptions here?
-        for(Human human:sim.getGrid().getHumans()) {
-            if (human.getHealth() > 0)
-                human.draw(g);
+        for(int i=0;i<sim.getGrid().getHumans().size();i++) {
+            if (sim.getGrid().getHumans().get(i).getHealth() > 0)
+                sim.getGrid().getHumans().get(i).draw(g);
         }
-        for(Goblin goblin:sim.getGrid().getMob()){
-            if(goblin.getHealth()>0)
-                goblin.draw(g);
+        for(int i=0;i<sim.getGrid().getMob().size();i++) {
+            if (sim.getGrid().getMob().get(i).getHealth() > 0)
+                sim.getGrid().getMob().get(i).draw(g);
         }
-
         for(Human human:sim.getGrid().getHumans()){
             if(human.inFightmode()) {
                 sim.getGrid().getChest().draw(g);
@@ -63,11 +61,11 @@ public class HvGPanel extends JPanel{
                sim.step();
            }
            try {
-               Thread.sleep(83);
-           } catch (InterruptedException e) {
-               throw new RuntimeException(e);
+               Thread.sleep(5);
            }
+           catch(Exception ignore){
 
+           }
            frameCount++;
 
            if(sim.getGrid().getHumans().isEmpty()||sim.getGrid().getMob().isEmpty()){
