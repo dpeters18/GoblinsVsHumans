@@ -1,15 +1,13 @@
-package section6;
-
 import java.util.*;
 public class Grid {
     ArrayList<Goblin> mob;
     ArrayList<Human> humans;
     Random rando=new Random();
+    Chest chest;
     public Grid() {
         humans = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            humans.add(new Human(new Location(10, 2 * i + 1)));
-        }
+        for(int i=0;i<5;i++)
+            humans.add(new Human(new Location(10, 2*i+1)));
         for (Human human : humans) {
             int x = rando.nextInt(4);
             switch (x) {
@@ -26,9 +24,8 @@ public class Grid {
                     break;
             }
             mob = new ArrayList<>();
-            for (int i = 0; i < 5; i++) {
-                mob.add(new Goblin(7, 20, new Location(0, 2 * i + 1)));
-            }
+            for(int i=0;i<5;i++)
+                mob.add(new Goblin(7, 20, new Location(0, 2*i+1)));
         }
     }
 
@@ -37,7 +34,7 @@ public class Grid {
         Random rando = new Random();
         int x = rando.nextInt(11);
         int y = rando.nextInt(11);
-        Chest chest = new Chest(new Location(x, y));
+        chest = new Chest(new Location(x, y));
         boolean chestnotplaced = true;
         for (int i = 0; i < 11; i++) {
             for (int j = 0; j < 11; j++) {
@@ -47,8 +44,9 @@ public class Grid {
                     if (homme.inFightmode() && chestnotplaced) {
                         if (chest.getLoc().getRow() == i && chest.getLoc().getCol() == j) {
                             for (Fighter fighter : fightersAt(new Location(i, j))) {
-                                if (fighter instanceof Human && ((Human) fighter).getLoc().equals(new Location(i, j))) {
+                                if (fighter instanceof Human && fighter.getLoc().equals(new Location(i, j))) {
                                     ((Human) fighter).addItem(chest.getLoot());
+
                                     chestnotplaced = false;
                                     break;
                                 }
@@ -83,6 +81,10 @@ public class Grid {
 
         }
         System.out.println();
+    }
+
+    public Chest getChest() {
+        return chest;
     }
 
     public ArrayList<Human> getHumans() {

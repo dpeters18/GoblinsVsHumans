@@ -1,7 +1,7 @@
-package section6;
+
 import java.util.*;
 public class HvGMain {
-    public static void main(String[] args){
+    public static void main(String[] args) {
                     System.out.println("In this simulation game, 5 goblins and 5 humans will fight to the death. \n" +
                             "The humans start out with either nothing, a sword, an axe, or a shield. Are you ready?\n" +
                             "(Please type 'yes' to start)");

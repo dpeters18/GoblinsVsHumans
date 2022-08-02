@@ -1,5 +1,3 @@
-package section6;
-
 public class Location {
     private int row;
     private int col;

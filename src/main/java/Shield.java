@@ -1,5 +1,3 @@
-package section6;
-
 public class Shield implements ItemDrop {
     int numhits=3;
     public void effect(Object obj,Object objj){
