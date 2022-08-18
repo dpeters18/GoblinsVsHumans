@@ -2,7 +2,6 @@ import javax.swing.JPanel;
 import java.awt.*;
 
 public class HvGPanel extends JPanel{
-    //change these names/dimensions after you get running code
     static int firstTileSize=24;
     static int scale=2;
     static int tileSize=firstTileSize*scale;
@@ -22,6 +21,7 @@ public class HvGPanel extends JPanel{
         Fighter.getFighterImage();
         Fighter.makeFrameMap();
         Chest.getImages();
+        Land.getImage();
     }
     public void startGameThread(){
         this.k=0;
@@ -37,6 +37,8 @@ public class HvGPanel extends JPanel{
         super.paintComponent(graphics);
         Graphics2D g= (Graphics2D) graphics;
 
+        Land lund=new Land();
+        lund.draw(g);
         for(int i=0;i<sim.getGrid().getHumans().size();i++) {
             if (sim.getGrid().getHumans().get(i).getHealth() > 0)
                 sim.getGrid().getHumans().get(i).draw(g);
@@ -64,10 +66,8 @@ public class HvGPanel extends JPanel{
                Thread.sleep(100);
            }
            catch(Exception ignore){
-
            }
            frameCount++;
-
            if(sim.getGrid().getHumans().isEmpty()||sim.getGrid().getMob().isEmpty()){
                if(sim.getGrid().getMob().isEmpty()){
                    teamNum=0;
